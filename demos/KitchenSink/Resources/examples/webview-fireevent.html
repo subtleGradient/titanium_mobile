@@ -3,11 +3,28 @@
 <head>
 	<meta http-equiv=Content-type content="text/html; charset=utf-8">
 	<title>webview-fireevent</title>
+
+<script>
+
+function fire(message){
+	var iframe = document.createElement('iframe')
+	iframe.style.display = 'none'
+	iframe.src = 'Titanium-UI-currentWebView-fireEvent://?message=' + message
+	document.documentElement.appendChild(iframe)
+}
+	
+</script>
 </head>
-<body>
+<body onload="fire('Hello from a WebView; I loaded!')">
 <div>
 
-<h1><a href="Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2">Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2</a></h1>
+<h1><a href="Titanium-UI-currentWebView-fireEvent://?message=I am a perfectly normal link"><code>Titanium-UI-currentWebView-fireEvent://?message=</code><strong>I am a perfectly normal link</strong></a></h1>
+
+<button onclick="fire('Hello from a WebView; I was clicked!')">
+	Tap me to send event!
+</button>
+
+<!-- <iframe src="Titanium-UI-currentWebView-fireEvent://?key=value&amp;amp;key2=value2&amp;lol=true"></iframe> -->
 
 </div>
 </body>

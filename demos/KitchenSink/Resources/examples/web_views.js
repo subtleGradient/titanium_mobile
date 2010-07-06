@@ -17,7 +17,7 @@ var data = [
 // add iphone specific tests
 if (Titanium.Platform.name == 'iPhone OS')
 {
-	data.push({title:'Local Eval', hasChild:true, url:'local_webview.html', evaljs:true});
+	data.push({title:'Local Eval', hasChild:true, url:'local_webview.html', evaljs:"window.my_global_variable", evaljsExpect:10});
 	data.push({title:'Local HTML', hasChild:true, url:'local_webview.html', evalhtml:true});
 	data.push({title:'Inline HTML w/ Border', hasChild:true, innerHTML:'<html><body><div>Hello from inline HTML. You should see red border</div></body></html>', border: true});
 	data.push({title:'PDF URL', hasChild:true, url:'http://www.appcelerator.com/assets/The_iPad_App_Wave.pdf'});
@@ -41,7 +41,9 @@ if (Titanium.Platform.name == 'iPhone OS')
 	}
 	
 	// fire events to Obj-C from any local or external site using webView:shouldStartLoadWithRequest:navigationType:
-	data.push({title:'Custom URL Handler events', hasChild:true, url:'webview-fireevent.html'});
+	data.push({title:'Custom URL Handler events (Local)', hasChild:true, url:'webview-fireevent.html'});
+	data.push({title:'Custom URL Handler events (External)', hasChild:true, url:'http://www.google.com/',
+		evaljs:'document.body.innerHTML = \'<h1><a href="Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2">Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2</a></h1>\''});
 }
 
 // create table view
@@ -137,7 +139,10 @@ tableview.addEventListener('click', function(e)
 			Ti.API.debug("webview loaded: "+e.url);
 			if (rowdata.evaljs)
 			{
-				alert("JS result was: "+webview.evalJS("window.my_global_variable")+". should be 10");
+				var result = webview.evalJS(rowdata.evaljs);
+				if (rowdata.evaljsExpect)
+					alert("JS result was: '" + result + "'. Should be '" + rowdata.evaljsExpect + "'");
+				result = null
 			}
 			if (rowdata.evalhtml)
 			{
