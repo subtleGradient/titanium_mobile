@@ -611,13 +611,16 @@ NSString * const kTitaniumJavascript = @"Ti.App={};Ti.API={};Ti.App._listeners={
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
 	NSURL *requestURL = [[request URL] retain];
-	if ([[requestURL scheme] isEqualToString: @"Titanium-UI-currentWebView-fireEvent"])
+	if ([[requestURL scheme] hasPrefix: @"app-"])
 	{
-		if ([self.proxy _hasListeners:@"command"])
+		NSString *eventName = [[[requestURL scheme] substringFromIndex:4] retain];
+		if ([self.proxy _hasListeners:eventName])
 		{
 			NSDictionary *event = [NSDictionary dictionaryWithObject:[requestURL absoluteString] forKey:@"url"];
-			[self.proxy fireEvent:@"command" withObject:event];
+			[self.proxy fireEvent:eventName withObject:event];
 		}
+		[eventName release];
+		
 		return NO;
 	}
 	[requestURL release];
