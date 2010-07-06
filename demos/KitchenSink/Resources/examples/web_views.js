@@ -39,6 +39,9 @@ if (Titanium.Platform.name == 'iPhone OS')
 	{
 		data.push({title:'Youtube Video', auto:true, hasChild:true, url:'youtube.html'});
 	}
+	
+	// fire events to Obj-C from any local or external site using webView:shouldStartLoadWithRequest:navigationType:
+	data.push({title:'Custom URL Handler events', hasChild:true, url:'webview-fireevent.html'});
 }
 
 // create table view
@@ -70,6 +73,11 @@ tableview.addEventListener('click', function(e)
 	// {
 	// 	alert('singletap');
 	// });
+	webview.addEventListener('command', function(e){
+		Ti.API.info('command event fired!')
+		Ti.API.info(e)
+		alert('command event fired with data: \n' + JSON.stringify(e))
+	});
 	// handle xhr to filesystem case first
 	if (e.index == 2)
 	{
