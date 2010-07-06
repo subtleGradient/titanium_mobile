@@ -43,7 +43,7 @@ if (Titanium.Platform.name == 'iPhone OS')
 	// fire events to Obj-C from any local or external site using webView:shouldStartLoadWithRequest:navigationType:
 	data.push({title:'Custom URL Handler events (Local)', hasChild:true, url:'webview-fireevent.html'});
 	data.push({title:'Custom URL Handler events (External)', hasChild:true, url:'http://www.google.com/',
-		evaljs:'document.body.innerHTML = \'<h1><a href="Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2">Titanium-UI-currentWebView-fireEvent://?key=value&amp;key2=value2</a></h1>\''});
+		evaljs:'document.body.innerHTML = \'<h1><a href="app-command://?key=value&amp;key2=value2">app-command://?key=value&amp;key2=value2</a></h1>\''});
 }
 
 // create table view
@@ -79,6 +79,11 @@ tableview.addEventListener('click', function(e)
 		Ti.API.info('command event fired!')
 		Ti.API.info(e)
 		alert('command event fired with data: \n' + JSON.stringify(e))
+	});
+	webview.addEventListener('my-custom-event', function(e){
+		Ti.API.info('my-custom-event event fired!')
+		Ti.API.info(e)
+		alert('my-custom-event event fired with data: \n' + JSON.stringify(e))
 	});
 	// handle xhr to filesystem case first
 	if (e.index == 2)

@@ -9,7 +9,7 @@
 function fire(message){
 	var iframe = document.createElement('iframe')
 	iframe.style.display = 'none'
-	iframe.src = 'Titanium-UI-currentWebView-fireEvent://?message=' + message
+	iframe.src = 'app-command://?message=' + message
 	document.documentElement.appendChild(iframe)
 }
 	
@@ -18,13 +18,14 @@ function fire(message){
 <body onload="fire('Hello from a WebView; I loaded!')">
 <div>
 
-<h1><a href="Titanium-UI-currentWebView-fireEvent://?message=I am a perfectly normal link"><code>Titanium-UI-currentWebView-fireEvent://?message=</code><strong>I am a perfectly normal link</strong></a></h1>
+<h1><a href="app-command://?message=I am a perfectly normal link"><code>app-command://?message=</code><strong>I am a perfectly normal link</strong></a></h1>
+<h1><a href="app-my-custom-event://?message=I am a perfectly normal link"><code>app-my-custom-event://?message=</code><strong>I am a perfectly normal link</strong></a></h1>
 
 <button onclick="fire('Hello from a WebView; I was clicked!')">
 	Tap me to send event!
 </button>
 
-<!-- <iframe src="Titanium-UI-currentWebView-fireEvent://?key=value&amp;amp;key2=value2&amp;lol=true"></iframe> -->
+<!-- <iframe src="app-command://?key=value&amp;amp;key2=value2&amp;lol=true"></iframe> -->
 
 </div>
 </body>
