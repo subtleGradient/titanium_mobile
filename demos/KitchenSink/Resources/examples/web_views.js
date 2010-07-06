@@ -85,6 +85,19 @@ tableview.addEventListener('click', function(e)
 		Ti.API.info(e)
 		alert('my-custom-event event fired with data: \n' + JSON.stringify(e))
 	});
+	webview.addEventListener('handle-form', function(e){
+		Ti.API.info('handle-form event fired!')
+		Ti.API.info(e)
+		alert('handle-form event fired with data: \n' + JSON.stringify(e))
+		// parse the querystring and do stuff with those values.
+	});
+	webview.addEventListener('read-some-data', function(e){
+		Ti.API.info('read-some-data event fired!')
+		Ti.API.info(decodeURIComponent(e.url))
+		var data = JSON.parse(decodeURIComponent(e.url).replace(/^.*?json=/,''))
+		Ti.API.info(data)
+		alert('read-some-data event fired with data: \n' + JSON.stringify(data))
+	});
 	// handle xhr to filesystem case first
 	if (e.index == 2)
 	{

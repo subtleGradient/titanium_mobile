@@ -7,15 +7,16 @@
 <script>
 
 function fire(message){
-	var iframe = document.createElement('iframe')
-	iframe.style.display = 'none'
-	iframe.src = 'app-command://?message=' + message
-	document.documentElement.appendChild(iframe)
+	window.location = 'app-command://?message=' + message
+}
+	
+function fireJSON(object){
+	window.location = 'app-read-some-data://?json=' + JSON.stringify(object)
 }
 	
 </script>
 </head>
-<body onload="fire('Hello from a WebView; I loaded!')">
+<body onload="fireJSON({ some:1, JSON:2, data:3 })">
 <div>
 
 <h1><a href="app-command://?message=I am a perfectly normal link"><code>app-command://?message=</code><strong>I am a perfectly normal link</strong></a></h1>
@@ -25,7 +26,14 @@ function fire(message){
 	Tap me to send event!
 </button>
 
-<!-- <iframe src="app-command://?key=value&amp;amp;key2=value2&amp;lol=true"></iframe> -->
+
+<form action="app-handle-form://" method=GET>
+	
+	<label>Name <input name=name placeholder=Name id=name value=Tom></label>
+	<label>Number <input name=number placeholder=Number id=number value=42></label>
+	
+	<input type=submit>
+</form>
 
 </div>
 </body>
